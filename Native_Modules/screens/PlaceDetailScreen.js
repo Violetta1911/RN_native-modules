@@ -3,6 +3,9 @@ import {View, Text, StyleSheet} from 'react-native';
 
 
 const PlacaDetailScreen = props => {
+    props.navigation.setOptions({
+        headerTitle: props.navigation.getParam('placeTitle')
+    })
  
   return (
     <View>
