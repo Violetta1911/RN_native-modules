@@ -1,5 +1,6 @@
 package com.native_modules;
 import android.os.Bundle;
+import com.rnfs.RNFSPackage; 
 
 import com.facebook.react.ReactActivity;
 
@@ -17,4 +18,5 @@ public class MainActivity extends ReactActivity {
   protected void onCreate(Bundle savedInstanceState) {
   super.onCreate(null);
 }
+
 }

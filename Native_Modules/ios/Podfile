@@ -12,6 +12,8 @@ target 'Native_Modules' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-location', :path => '../node_modules/react-native-location'
+
   target 'Native_ModulesTests' do
     inherit! :complete
     # Pods for testing
