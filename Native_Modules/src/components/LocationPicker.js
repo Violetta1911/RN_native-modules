@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import GetLocation from 'react-native-get-location';
-import RNLocation from 'react-native-location';
+import React, {useState, useEffect} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {
   View,
@@ -11,32 +9,46 @@ import {
   Alert,
 } from 'react-native';
 import Colors from '../constants/Colors';
+import MapView from './MapView';
 
 const LocationPicker = props => {
+  const [pickedLocation, setPickedLocation] = useState();
+
+  const  {mapPickedLocation} = props.route.params || {}
+  const {onLocationPicked} = props
+
+  useEffect(()=>{
+    if (mapPickedLocation) {     
+     setPickedLocation(mapPickedLocation)
+     onLocationPicked(mapPickedLocation)
+    }
+  }, [mapPickedLocation, onLocationPicked])
+
   const getLocationHandler = () => {
     console.log('pressed');
-    Geolocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then(location => {
-        console.log(location);
-      })
-      .catch(error => {
-        const {code, message} = error;
-        console.warn(code, message);
-      });
+    setPickedLocation({lat: 37.78825, lng: -122.4324});
+    onLocationPicked({lat: 37.78825, lng: -122.4324})
+    // Geolocation.getCurrentPosition({
+    //   enableHighAccuracy: true,
+    //   timeout: 15000,
+    // })
+    //   .then(location => {
+    //     console.log(location);
+    //   })
+    //   .catch(error => {
+    //     const {code, message} = error;
+    //     console.warn(code, message);
+    //   });
   };
-  const pickOnMapHandler = ()=>{
-    props.navigation.navigate('Map')
-
-  }
+  const pickOnMapHandler = () => {
+    props.navigation.navigate('Map');
+  };
   return (
     <View style={styles.locationPicker}>
-      <View style={styles.mapPreview}>
+      <MapView style={styles.mapPreview} location={pickedLocation}>
         <Text>No Location choosed!</Text>
-      </View>
-      <View style = {styles.actions}>
+      </MapView>
+      <View style={styles.actions}>
         <Button
           title="Chose your location"
           color={Colors.primary}
@@ -59,8 +71,6 @@ const styles = StyleSheet.create({
   mapPreview: {
     width: '100%',
     height: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
     marginBottom: 15,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -68,8 +78,8 @@ const styles = StyleSheet.create({
   actions: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around'
-  }
+    justifyContent: 'space-around',
+  },
 });
 
 export default LocationPicker;

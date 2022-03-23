@@ -34,7 +34,6 @@ const MapScreen = props => {
       latitude: selectedLocation.lat,
       longitude: selectedLocation.lng,
     };
-    console.log(markerCoordinates);
   }
 
   const savePickedLocationHandler = useCallback(() =>{

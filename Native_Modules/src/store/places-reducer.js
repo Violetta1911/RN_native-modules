@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case SET_PLACES:    
       return{
-        places: action.places.map(pl => new Place(pl.id, pl.title, pl.imageUri ))
+        places: action.places.map(pl => new Place(pl.id, pl.title, pl.imageUri, pl.address, pl.lat, pl.lng  ))
       }
     case DELETE_PLACES: {
       return{
@@ -21,6 +21,10 @@ export default (state = initialState, action) => {
         action.placeData.id.toString(),
         action.placeData.title,
         action.placeData.imageUri,
+        action.placeData.address,
+        action.placeData.coord.lat,
+        action.placeData.coord.lng
+
       );
 
       return {
